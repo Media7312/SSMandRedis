@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.mapper.UserMapper">
+
+    <sql id="columns">
+        id AS "id",
+        username AS "username",
+        password AS "password",
+        salt AS "salt",
+        locked AS "locked",
+        activation AS "activation",
+        creator_id AS "creatorId",
+        modifier_id AS "modifierId",
+        created_at AS "createdAt",
+        modified_at AS "modifiedAt"
+    </sql>
+    <select id="list" parameterType="com.hp.entity.User" resultType="com.hp.entity.User">
+        select
+        <include refid="columns"/>
+        from sys_user
+        <where>
+            <if test="id != null and id != ''">
+                AND id=#{id}
+            </if>
+            <if test="username != null and username != ''">
+                AND username=#{username}
+            </if>
+            <if test="password != null and password != ''">
+                AND password=#{password}
+            </if>
+            <if test="salt != null and salt != ''">
+                AND salt=#{salt}
+            </if>
+            <if test="activation != null and activation != ''">
+                AND activation=#{activation}
+            </if>
+            <if test="creatorId != null and creatorId != ''">
+                AND creator_id=#{creatorId}
+            </if>
+            <if test="modifierId != null and modifierId != ''">
+                AND modifier_id=#{modifierId}
+            </if>
+            <if test="createdAt != null and createdAt != ''">
+                created_at=#{createdAt}
+            </if>
+        </where>
+        order by created_at asc
+    </select>
+    <select id="getUserPasswordById" resultType="String" parameterType="int">
+        SELECT A.password
+        FROM SYSTEM_USER A
+        WHERE A.id=#{id}
+
+    </select>
+
+</mapper>

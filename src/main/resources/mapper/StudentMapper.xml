@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.mapper.StudentMapper">
+    <resultMap id="student" type="Student">
+        <id column="s_id" property="s_id"/>
+        <result column="s_name" property="s_name"/>
+        <result column="c_id" property="c_id"/>
+    </resultMap>
+
+    <select id="getAllStudentByC_id" resultMap="student" parameterType="int">
+        SELECT A.* FROM student A WHERE A.C_id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.mapper.BookMapper">
+    <cache eviction="LRU" type="com.hp.redis.RedisCache" />
+    <resultMap id="ofCategory" type="com.hp.entity.Book">
+        <id column="book_id" property="book_id"/>
+        <result column="book_id" property="book_id"/>
+        <result column="book_name" property="book_name"/>
+        <collection property="categoryList" ofType="com.hp.entity.Category">
+            <id column="cate_id" property="cate_id"/>
+            <result column="cate_name" property="cate_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="getBook" resultMap="ofCategory" >
+        SELECT
+            A.book_id,
+            A.book_name,
+            B.cate_id,
+            B.cate_name
+        FROM
+          book A
+        INNER JOIN book_cate C ON A.book_id=C.book_id
+        INNER JOIN category B ON B.cate_id=C.cate_id
+    </select>
+</mapper>

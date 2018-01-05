@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.mapper.ClassesMapper">
+    <resultMap id="classes" type="classes">
+        <id column="c_id " property="c_id"/>
+        <result column="c_id" property="c_id"/>
+        <result column="c_name" property="c_name"/>
+        <collection property="Slist" column="c_id" ofType="com.hp.entity.Student">
+            <id property="s_id" column="s_id"/>
+            <result property="s_name" column="s_name"/>
+            <result column="c_id" property="c_id"/>
+        </collection>
+
+    </resultMap>
+
+    <sql id="selectClass">
+          B.c_id,
+          B.c_name,
+          A.s_id,
+          A.s_name
+    </sql>
+
+    <select id="getClassStudent" resultMap="classes" parameterType="int">
+        SELECT 
+        <include refid="selectClass"/>
+        FROM 
+        classes B,student A
+
+        WHERE
+        B.c_id=#{c_id}
+
+        AND
+        B.c_id=A.c_id
+
+
+
+    </select>
+</mapper>
